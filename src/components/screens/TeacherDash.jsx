@@ -40,8 +40,9 @@ function CourseCard({ course, index, onProctor }) {
 const NAV = [
   { key: "teacherDash", label: "My Courses"  },
   { key: "examConfig",  label: "Create Exam" },
+  { key: "grading",     label: "Grade"        },
   { key: "proctor",     label: "Proctor"      },
-  { key: "analytics",  label: "Results"      },
+  { key: "analytics",   label: "Analytics"   },
 ];
 
 function getTestStatus(test) {

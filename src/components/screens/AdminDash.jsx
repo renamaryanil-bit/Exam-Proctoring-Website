@@ -8,6 +8,7 @@ import Btn from "../ui/Btn";
 const NAV = [
   { key: "adminDash", label: "Overview"   },
   { key: "courses",   label: "Courses"    },
+  { key: "grading",   label: "Grade"      },
   { key: "proctor",   label: "Live Exams" },
   { key: "analytics", label: "Analytics"  },
 ];

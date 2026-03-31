@@ -41,12 +41,13 @@ export const authAPI = {
 
 // ─── Users ────────────────────────────────────────────────────────────────────
 export const userAPI = {
-  getAll:     ()           => get('/users'),
-  getByRole:  (role)       => get(`/users/by-role/${role}`),
-  getMe:      ()           => get('/users/me'),
-  updateMe:   (name)       => put('/users/me', { name }),
-  create:     (data)       => post('/users', data),
-  delete:     (id)         => del(`/users/${id}`),
+  getAll:            ()                                          => get('/users'),
+  getByRole:         (role)                                     => get(`/users/by-role/${role}`),
+  getMe:             ()                                         => get('/users/me'),
+  updateMe:          (name)                                     => put('/users/me', { name }),
+  updateCredentials: (currentPassword, newUsername, newPassword) => put('/users/me/credentials', { currentPassword, newUsername, newPassword }),
+  create:            (data)                                     => post('/users', data),
+  delete:            (id)                                       => del(`/users/${id}`),
 };
 
 // ─── Classes ──────────────────────────────────────────────────────────────────
@@ -69,9 +70,11 @@ export const testAPI = {
 
 // ─── Submissions ──────────────────────────────────────────────────────────────
 export const submissionAPI = {
-  submit:       (testId, answers) => post('/submissions', { testId, answers }),
-  getMyResults: ()                => get('/submissions/my-results'),
-  search:       (q)               => get(`/submissions/search?q=${encodeURIComponent(q)}`),
+  submit:       (testId, answers)  => post('/submissions', { testId, answers }),
+  getMyResults: ()                 => get('/submissions/my-results'),
+  search:       (q)                => get(`/submissions/search?q=${encodeURIComponent(q)}`),
+  getForTest:   (testId)           => get(`/submissions/test/${testId}`),
+  getById:      (id)               => get(`/submissions/${id}`),
   review:       (id, manualScores) => put(`/submissions/${id}/review`, { manualScores }),
 };
 

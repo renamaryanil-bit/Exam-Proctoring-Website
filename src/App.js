@@ -12,6 +12,7 @@ import AnalyticsScreen  from "./components/screens/AnalyticsScreen";
 import ProctorScreen    from "./components/screens/ProctorScreen";
 import CoursesScreen    from "./components/screens/CoursesScreen";
 import ExamConfigScreen from "./components/screens/ExamConfigScreen";
+import GradingScreen    from "./components/screens/GradingScreen";
 import ProfileScreen    from "./components/screens/ProfileScreen";
 import SettingsScreen   from "./components/screens/SettingsScreen";
 
@@ -64,6 +65,7 @@ export default function App() {
     proctor:     <ProctorScreen    user={user} setScreen={setScreen} />,
     courses:     <CoursesScreen    user={user} setScreen={setScreen} notify={notify} onLogout={handleLogout} />,
     examConfig:  <ExamConfigScreen user={user} setScreen={setScreen} notify={notify} />,
+    grading:     <GradingScreen    user={user} setScreen={setScreen} notify={notify} />,
     profile:     <ProfileScreen    user={user} setScreen={setScreen} />,
     settings:    <SettingsScreen   user={user} setScreen={setScreen} />,
   };
