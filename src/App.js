@@ -60,7 +60,7 @@ export default function App() {
     precheck:    <PreCheck         onEnter={() => setScreen("exam")}  onBack={() => setScreen("studentDash")} />,
     exam:        <ExamScreen       user={user} test={activeTest}
                                    onSubmit={(results) => { setExamResults(results); setScreen("analytics"); }}
-                                   notify={notify} />,
+                                   notify={notify} setScreen={setScreen} />,
     analytics:   <AnalyticsScreen  user={user} setScreen={setScreen} examResults={examResults} />,
     proctor:     <ProctorScreen    user={user} setScreen={setScreen} />,
     courses:     <CoursesScreen    user={user} setScreen={setScreen} notify={notify} onLogout={handleLogout} />,

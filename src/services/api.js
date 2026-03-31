@@ -70,12 +70,13 @@ export const testAPI = {
 
 // ─── Submissions ──────────────────────────────────────────────────────────────
 export const submissionAPI = {
-  submit:       (testId, answers)  => post('/submissions', { testId, answers }),
-  getMyResults: ()                 => get('/submissions/my-results'),
-  search:       (q)                => get(`/submissions/search?q=${encodeURIComponent(q)}`),
-  getForTest:   (testId)           => get(`/submissions/test/${testId}`),
-  getById:      (id)               => get(`/submissions/${id}`),
-  review:       (id, manualScores) => put(`/submissions/${id}/review`, { manualScores }),
+  submit:          (testId, answers)  => post('/submissions', { testId, answers }),
+  checkSubmitted:  (testId)           => get(`/submissions/check/${testId}`),
+  getMyResults:    ()                 => get('/submissions/my-results'),
+  search:          (q)                => get(`/submissions/search?q=${encodeURIComponent(q)}`),
+  getForTest:      (testId)           => get(`/submissions/test/${testId}`),
+  getById:         (id)               => get(`/submissions/${id}`),
+  review:          (id, manualScores) => put(`/submissions/${id}/review`, { manualScores }),
 };
 
 // ─── Violations ───────────────────────────────────────────────────────────────
