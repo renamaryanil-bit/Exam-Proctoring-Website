@@ -34,6 +34,7 @@ export default function ExamConfigScreen({ user, setScreen, notify }) {
   const [duration,   setDuration]   = useState(90);
   const [strictness, setStrictness] = useState("moderate");
   const [calc,       setCalc]       = useState(false);
+  const [allowPause, setAllowPause] = useState(false);
   const [randomize,  setRandomize]  = useState(false);
 
   // ── Step 2: Sections & Questions ───────────────────────────────────────────
@@ -104,7 +105,7 @@ export default function ExamConfigScreen({ user, setScreen, notify }) {
     try {
       await testAPI.create({
         name: title, classId, startTime, endTime, duration,
-        strictness, calculator: calc, randomize,
+        strictness, calculator: calc, allowPause, randomize,
         sections,
         questions: questions.map(q => ({
           ...q,
@@ -189,8 +190,9 @@ export default function ExamConfigScreen({ user, setScreen, notify }) {
                 {/* Toggles */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                   {[
-                    { l: "Allow Calculator", v: calc, set: setCalc },
-                    { l: "Randomise Question Order", v: randomize, set: setRandomize },
+                    { l: "Allow Calculator",         v: calc,       set: setCalc       },
+                    { l: "Allow Exam Pause",          v: allowPause, set: setAllowPause },
+                    { l: "Randomise Question Order",  v: randomize,  set: setRandomize  },
                   ].map(t => (
                     <div key={t.l} onClick={() => t.set(p => !p)} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}>
                       <div style={{ width: 40, height: 22, borderRadius: 11, background: t.v ? T.blue : T.ink3, border: `2px solid ${t.v ? T.blue : T.ink4}`, position: "relative", transition: "all 0.2s", flexShrink: 0 }}>
