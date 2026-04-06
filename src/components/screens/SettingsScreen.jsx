@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { T, serif, mono } from "../../data/tokens";
 import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../context/ThemeContext";
 import { userAPI } from "../../services/api";
 import Btn from "../ui/Btn";
 
@@ -14,22 +15,27 @@ function SectionHeader({ children }) {
   );
 }
 
-function ToggleRow({ label, description, value, onChange }) {
+function ToggleRow({ label, description, value, onChange, accent }) {
+  // accent=true → use var(--accent) for the active colour (role-based)
+  const activeColor  = accent ? "var(--accent)"    : T.blue;
+  const activeBorder = accent ? "var(--accent-bd)" : T.blue;
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 0", borderBottom: `1px solid ${T.ink3}` }}>
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 0", borderBottom: `1px solid var(--border)` }}>
       <div>
-        <div style={{ fontSize: 13, color: T.ghost, fontWeight: 500 }}>{label}</div>
-        {description && <div style={{ fontSize: 11, color: T.muted, marginTop: 2 }}>{description}</div>}
+        <div style={{ fontSize: 13, color: "var(--text)", fontWeight: 500 }}>{label}</div>
+        {description && <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 2 }}>{description}</div>}
       </div>
       <div onClick={onChange} style={{
         width: 40, height: 22, borderRadius: 11,
-        background: value ? T.blue : T.ink3, border: `2px solid ${value ? T.blue : T.ink4}`,
+        background: value ? activeColor : "var(--bg3)",
+        border: `2px solid ${value ? activeBorder : "var(--border2)"}`,
         position: "relative", transition: "all 0.2s", cursor: "pointer", flexShrink: 0, marginLeft: 16,
       }}>
         <div style={{
           position: "absolute", top: 2, left: value ? 18 : 2,
           width: 14, height: 14, borderRadius: "50%",
           background: "white", transition: "left 0.2s",
+          boxShadow: value ? `0 0 6px ${accent ? "var(--accent)" : T.blue}60` : "none",
         }} />
       </div>
     </div>
@@ -225,6 +231,7 @@ function CredentialsSection({ user, notify, updateUserName }) {
 // ── Main settings screen ────────────────────────────────────────────────────
 export default function SettingsScreen({ user, setScreen }) {
   const { updateUserName } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const roleColor = ROLE_COLOR[user?.role] || T.blue;
   const backScreen = user?.role === "student" ? "studentDash" : user?.role === "teacher" ? "teacherDash" : "adminDash";
 
@@ -254,10 +261,10 @@ export default function SettingsScreen({ user, setScreen }) {
   };
 
   return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column", background: T.ink, overflow: "hidden" }}>
+    <div style={{ height: "100vh", display: "flex", flexDirection: "column", background: "var(--bg)", overflow: "hidden" }}>
       {/* Top bar */}
       <div style={{
-        height: 56, background: "#0c0b18", borderBottom: `1px solid ${T.ink3}`,
+        height: 56, background: "var(--topbar)", borderBottom: "1px solid var(--border)",
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "0 24px", flexShrink: 0,
       }}>
@@ -315,7 +322,14 @@ export default function SettingsScreen({ user, setScreen }) {
 
           {/* ── Appearance ── */}
           <SectionHeader>Appearance & Language</SectionHeader>
-          <div style={{ background: T.ink2, border: `1px solid ${T.ink3}`, borderRadius: 16, padding: "0 20px" }}>
+          <div style={{ background: "var(--bg2)", border: `1px solid var(--border)`, borderRadius: 16, padding: "0 20px" }}>
+            <ToggleRow
+              label="Dark Mode"
+              description={isDark ? "Switch to light theme" : "Switch to dark theme"}
+              value={isDark}
+              onChange={toggleTheme}
+              accent
+            />
             <ToggleRow label="Compact View"      description="Reduce padding and spacing across the UI" value={compactView}       onChange={() => setCompactView(v => !v)} />
             <ToggleRow label="Enable Animations" description="Fade-in and transition effects"           value={animationsEnabled} onChange={() => setAnimationsEnabled(v => !v)} />
             <SelectRow
